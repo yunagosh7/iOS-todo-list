@@ -7,12 +7,18 @@
 
 import Foundation
 
-struct ResponseWrapper : Decodable {
+struct CreateResponseWrapper : Decodable {
+    let status: HttpStatus?
+    let message: String?
+    let todo: TodoModel
+}
+
+
+struct GetAllResponseWrapper : Decodable {
     let status: HttpStatus?
     let message: String?
     let todos: [TodoModel]?
     let todoCount: Int?
-    
 }
 
 enum HttpStatus: String, Decodable {

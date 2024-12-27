@@ -25,7 +25,7 @@ class TodoService {
         
         do {
             let decoder = JSONDecoder()
-            let res: ResponseWrapper = try decoder.decode(ResponseWrapper.self, from: data)
+            let res: GetAllResponseWrapper = try decoder.decode(GetAllResponseWrapper.self, from: data)
             print("items: \(res.todos ?? [])")
             return res.todos ?? []
         } catch TodoServiceErrors.dataType {
@@ -52,7 +52,8 @@ class TodoService {
         }
         
         do {
-            return try JSONDecoder().decode(TodoModel.self, from: data)
+            let dataDecoded = try JSONDecoder().decode(CreateResponseWrapper.self, from: data)
+            return dataDecoded.todo
         } catch {
             throw TodoServiceErrors.dataType
         }
