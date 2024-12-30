@@ -118,7 +118,7 @@ class TodoService {
         }
         
         do {
-            let dataDecoded = try JSONDecoder().decode(CreateResponseWrapper.self, from: data)
+            let dataDecoded = try JSONDecoder().decode(UpdateResponseWrapper.self, from: data)
 
             guard dataDecoded.status == .success else {
                 throw TodoServiceErrors.apiError

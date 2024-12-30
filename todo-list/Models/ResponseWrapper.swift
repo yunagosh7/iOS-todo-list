@@ -25,6 +25,11 @@ struct DeleteResponseWrapper : Decodable {
     var message: String
 }
 
+struct UpdateResponseWrapper : Decodable {
+    var status: HttpStatus
+    var message: String
+}
+
 enum HttpStatus: String, Decodable {
     case success = "Success"
     case dbError = "Error"

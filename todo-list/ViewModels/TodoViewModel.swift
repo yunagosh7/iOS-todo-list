@@ -60,7 +60,6 @@ class TodoViewModel : ObservableObject {
                  }
                  return todo
              }
-            print("items number: \(self.todos.count)")
         } catch {
             throw error
         }
