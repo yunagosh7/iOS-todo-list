@@ -130,36 +130,6 @@
             endingLineNumber = "57"
             landmarkName = "updateTodo(updatedTodo:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "86C811CC-48DE-4687-AB44-9C5A281DE34E - b98507351f2dea60"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for todo_list.TodoViewModel.updateTodo(updatedTodo: todo_list.TodoModel) async throws -&gt; ()"
-                  moduleName = "todo-list.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yunagosh/projects/swift/todo-list/todo-list/ViewModels/TodoViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57">
-               </Location>
-               <Location
-                  uuid = "86C811CC-48DE-4687-AB44-9C5A281DE34E - c093b3fefaf29379"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (todo_list.TodoModel) -&gt; todo_list.TodoModel in todo_list.TodoViewModel.updateTodo(updatedTodo: todo_list.TodoModel) async throws -&gt; ()"
-                  moduleName = "todo-list.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yunagosh/projects/swift/todo-list/todo-list/ViewModels/TodoViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "57"
-                  endingLineNumber = "57">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
