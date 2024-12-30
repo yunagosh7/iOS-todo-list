@@ -10,11 +10,11 @@ import Foundation
 
 struct TodoModel : Codable, Identifiable {
     let description: String?
-    let isCompleted: Bool?
-    let _id: String?
+    var isCompleted: Bool
+    let _id: String
     let title: String?
 
-    var id: String? { _id }
+    var id: String { _id }
     
 }
 

@@ -9,9 +9,8 @@ import Foundation
 import SwiftUI
 
 struct TodoCard : View {
-    
     @State var selected: Bool = false
-        
+    
     let todo: TodoModel
     
     @ObservedObject var viewModel: TodoViewModel
@@ -19,7 +18,7 @@ struct TodoCard : View {
     
     var body: some View {
         VStack {
-                
+            
             HStack {
                 VStack(alignment: .leading) {
                     Text(todo.title ?? "")
@@ -39,13 +38,13 @@ struct TodoCard : View {
                 
                 Button(action: {
                 }) {
+                    
+                    Image(systemName: "xmark")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                    
+                }
                 
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                        
-                    }
-              
                 
                 .frame(width: 40,height: 40)
                 .background(.backgroundApp)
@@ -80,33 +79,9 @@ struct TodoCard : View {
                             
                         }
                     }) {
-                      
-                            Image(systemName: "info")
-                                .resizable()
-                                .frame(width: 12, height: 22)
-                                .foregroundColor(.font)
-                          
-                    }
-                    .frame(width: 40,height: 40)
-                    .background(.appGray)
-                    .cornerRadius(8)
-                    .overlay() {
-                        RoundedRectangle( cornerRadius: 8)
-                            .stroke(.accent, lineWidth: 2)
-                 
-                    }
-                    .padding(.leading, 12)
-                 
-                    
-                    
-                    Button(action: {
-                        Task {
-                            
-                        }
-                    }) {
-                        Image(systemName: "pencil")
+                        Image(systemName: "info")
                             .resizable()
-                            .frame(width: 22, height: 22)
+                            .frame(width: 12, height: 22)
                             .foregroundColor(.font)
                     }
                     .frame(width: 40,height: 40)
@@ -115,13 +90,49 @@ struct TodoCard : View {
                     .overlay() {
                         RoundedRectangle( cornerRadius: 8)
                             .stroke(.accent, lineWidth: 2)
-                 
+                        
+                    }
+                    .padding(.leading, 12)
+                    
+                    Button(action: {
+                        Task {
+                            do {
+                                var updatedTodo = todo
+                                updatedTodo.isCompleted = !updatedTodo.isCompleted
+                                try await viewModel.updateTodo(updatedTodo: updatedTodo)
+                            } catch {
+                                print("Erorr updating \(error)")
+                            }
+                        }
+                    }) {
+                        if todo.isCompleted {
+                            
+                            Image(systemName: "checkmark.square.fill")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                                .foregroundColor(.font)
+                        } else {
+                            
+                            Image(systemName: "square")
+                                .resizable()
+                                .frame(width: 22, height: 22)
+                                .foregroundColor(.font)
+                        }
+                        
+                    }
+                    .frame(width: 40,height: 40)
+                    .background(.appGray)
+                    .cornerRadius(8)
+                    .overlay() {
+                        RoundedRectangle( cornerRadius: 8)
+                            .stroke(.accent, lineWidth: 2)
+                        
                     }
                     .padding(.leading, 4)
                 }
             }
         }
-            
+        
         
     }
 }

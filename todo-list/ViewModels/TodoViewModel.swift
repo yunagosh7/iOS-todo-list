@@ -50,6 +50,22 @@ class TodoViewModel : ObservableObject {
         }
     }
     
+    func updateTodo(updatedTodo: TodoModel) async throws -> Void {
+       
+        do {
+            try await TodoService.shared.updateTodo(updatedTodo)
+             self.todos = todos.map { todo in
+                 if updatedTodo._id == todo._id {
+                     return updatedTodo
+                 }
+                 return todo
+             }
+            print("items number: \(self.todos.count)")
+        } catch {
+            throw error
+        }
+    }
+    
     
     func openDialog(todo: TodoModel, dialog: Dialogs) -> Void {
         self.dialogOpen = dialog
