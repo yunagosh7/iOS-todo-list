@@ -16,9 +16,6 @@ struct ContentView: View {
     
     @State var todoSelected: TodoModel? = nil
     
-    @State var dialogOpen: Dialogs? = nil
-    
-    
     @StateObject var viewModel: TodoViewModel = TodoViewModel()
     
     var body: some View {
@@ -74,8 +71,8 @@ struct ContentView: View {
                             .foregroundColor(.white)
                     } else {
                         List(viewModel.todos) {todo in
-                            TodoCard(todo: todo, dialogOpen: $dialogOpen, todoSelected: $todoSelected)
-                                .listRowBackground(Color.backgroundApp)                    }
+                            TodoCard(todo: todo, viewModel: viewModel)
+                            .listRowBackground(Color.backgroundApp)                    }
                         .listStyle(.plain)
                         .foregroundColor(.accentColor)
                     }
@@ -83,10 +80,15 @@ struct ContentView: View {
                 Spacer()
                 
             }
-            
-            if todoSelected != nil {
-                DeleteDialog(todo: $todoSelected)
+            switch viewModel.dialogOpen {
+                case .delete:
+                    DeleteDialog(viewModel: viewModel)
+                case .edit:
+                    Text("Edit")
+                default:
+                    EmptyView()
             }
+            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .padding(.horizontal, 8)
@@ -102,11 +104,6 @@ struct ContentView: View {
         
     }
     
-    enum Dialogs {
-        case delete
-        
-        case edit
-    }
 }
 
 #Preview {

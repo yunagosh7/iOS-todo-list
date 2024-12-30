@@ -25,10 +25,16 @@ class TodoService {
         
         do {
             let decoder = JSONDecoder()
-            let res: GetAllResponseWrapper = try decoder.decode(GetAllResponseWrapper.self, from: data)
-            print("items: \(res.todos ?? [])")
-            return res.todos ?? []
-        } catch TodoServiceErrors.dataType {
+            let dataDecoded: GetAllResponseWrapper = try decoder.decode(GetAllResponseWrapper.self, from: data)
+            
+            guard dataDecoded.status == .success else {
+                throw TodoServiceErrors.apiError
+            }
+            
+            return dataDecoded.todos
+        } catch TodoServiceErrors.dbError {
+            throw TodoServiceErrors.dbError
+        } catch {
             throw TodoServiceErrors.dataType
         }
     }
@@ -53,17 +59,50 @@ class TodoService {
         
         do {
             let dataDecoded = try JSONDecoder().decode(CreateResponseWrapper.self, from: data)
+    
+            guard dataDecoded.status == .success else {
+                throw TodoServiceErrors.apiError
+            }
+            
             return dataDecoded.todo
-        } catch {
+        } catch TodoServiceErrors.dbError {
+            throw TodoServiceErrors.dbError
+        } catch  {
             throw TodoServiceErrors.dataType
         }
         
+    }
+    
+    
+    func deleteOne(_ todoId: String) async throws -> Void {
+        let url = URL(string: "http://localhost:3000/api/v1/todo/\(todoId)")
+        var urlRequest = URLRequest(url: url!)
         
+        urlRequest.httpMethod = "DELETE"
+        
+        let (data, response) = try await URLSession.shared.data(for: urlRequest)
+        
+        guard let response = response as? HTTPURLResponse, response.statusCode == 201 else {
+            print(response)
+            throw TodoServiceErrors.apiError
+        }
+        
+        do {
+            let dataDecoded = try JSONDecoder().decode(DeleteResponseWrapper.self, from: data)
+            
+            guard dataDecoded.status == .success else {
+                throw TodoServiceErrors.apiError
+            }
+            
+        } catch {
+            throw TodoServiceErrors.dataType
+        }
     }
     
     
     enum TodoServiceErrors : Error {
         case apiError
+        case dbError
         case dataType
     }
 }
@@ -76,3 +115,4 @@ extension TodoService: NSCopying {
         return self
     }
 }
+

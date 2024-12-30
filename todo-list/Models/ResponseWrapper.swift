@@ -8,19 +8,24 @@
 import Foundation
 
 struct CreateResponseWrapper : Decodable {
-    let status: HttpStatus?
-    let message: String?
-    let todo: TodoModel
+    var status: HttpStatus
+    var message: String
+    var todo: TodoModel
 }
 
-
 struct GetAllResponseWrapper : Decodable {
-    let status: HttpStatus?
-    let message: String?
-    let todos: [TodoModel]?
-    let todoCount: Int?
+    var status: HttpStatus
+    var message: String
+    var todos: [TodoModel]
+    let todoCount: Int
+}
+
+struct DeleteResponseWrapper : Decodable {
+    var status: HttpStatus
+    var message: String
 }
 
 enum HttpStatus: String, Decodable {
     case success = "Success"
+    case dbError = "Error"
 }
